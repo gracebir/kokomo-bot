@@ -5,6 +5,9 @@
   "repository": "https://github.com/gracebir/kokomo-bot",
   "author": "grace",
   "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
   "dependencies": {
     "dotenv": "^16.4.5",
     "telegraf": "^4.16.3"
