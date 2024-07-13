@@ -1,0 +1,12 @@
+{
+  "name": "kokomo-bot",
+  "version": "1.0.0",
+  "main": "main.js",
+  "repository": "https://github.com/gracebir/kokomo-bot",
+  "author": "grace",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "telegraf": "^4.16.3"
+  }
+}
