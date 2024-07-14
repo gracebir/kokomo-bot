@@ -2,7 +2,7 @@
 
 require("dotenv").config();
 const express = require("express");
-const fetch = require("node-fetch");
+const axios = require("axios");
 const { Telegraf } = require("telegraf");
 
 const app = express();
@@ -36,30 +36,31 @@ bot.start(async (ctx) => {
     const refCode = ctx.startPayload;
 
     try {
-        const getUserResponse = await fetch(
+        const getUserResponse = await axios.get(
             `${USER_CREATION_ENDPOINT}/${ctx.from.id}`
         );
 
-        if (!getUserResponse.ok) {
+        console.log("info => ", getUserResponse.data);
+
+        if (getUserResponse.statusText !== "OK") {
             throw new Error("Failed to fetch user information");
         }
 
-        const userData = await getUserResponse.json();
+        const userData = await getUserResponse.data.data;
         console.log(ctx.from);
 
         if (Object.keys(userData).length > 0) {
             console.log("User Data:", userData);
         } else {
-            const createUserResponse = await fetch(USER_CREATION_ENDPOINT, {
-                method: "POST",
-                body: JSON.stringify({
+            const createUserResponse = await axios.post(
+                USER_CREATION_ENDPOINT,
+                {
                     tgUserId: ctx.from.id,
                     refCode: refCode,
-                }),
-                headers: { "Content-Type": "application/json" },
-            });
+                }
+            );
 
-            if (!createUserResponse.ok) {
+            if (createUserResponse.statusText !== "OK") {
                 throw new Error("Failed to create user");
             }
         }
