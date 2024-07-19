@@ -46,7 +46,7 @@ bot.start(async (ctx) => {
             throw new Error("Failed to fetch user information");
         }
 
-        const userData = await getUserResponse.data.data;
+        const userData = getUserResponse.data;
         console.log(ctx.from);
 
         if (Object.keys(userData).length > 0) {
@@ -140,12 +140,16 @@ bot.command("socialfi", (ctx) => {
     });
 });
 
+app.use(bot.webhookCallback('/secret-path'))
+bot.telegram.setWebhook(`${process.env.CAPSULE_URL}/secret-path`)
+
 app.get("/", (req, res) => {
     res.send("Telegram bot is running!");
 });
 
+// bot.launch();
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     console.log("Bot is running" + emojis.rocket);
-    bot.launch();
 });
